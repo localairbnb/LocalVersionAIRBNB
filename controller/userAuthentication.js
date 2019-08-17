@@ -1,7 +1,9 @@
 const config=require('../config/clientConfig')
 const  db= config.mydb
 const auth=config.auth
-let FieldValue = require('firebase-admin').firestore.FieldValue;
+const cloudinary=require('cloudinary');
+require ('../config/cloudinary');
+const upload=require('../config/multer');
 
 
 
@@ -50,7 +52,7 @@ const User = {
                 return res.send(404).json("Your account is not verified yet. Click on email verification code sent to your email")
             }
             else{
-                res.status(200).json(credentials.user.uid)
+                res.status(200).json(credentials.user)
             }
         }).catch(function(error) {
             // Handle Errors here.
@@ -65,11 +67,16 @@ const User = {
                
               }
               else{
-                return res.status(404).json("An error occured on the server and couldnt log in  user because "+error.message) 
+                return res.status(404).json("An error occured on the server and couldnt log in  user because "+errorMessage) 
               }
           });
 
-    }
+    },
+   
+      
+
+  
+
 
 }
 
