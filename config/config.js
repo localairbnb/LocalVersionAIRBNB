@@ -8,6 +8,10 @@ admin.initializeApp({
   databaseURL: "https://localairbnb.firebaseio.com"
 });
 const db = admin.firestore();
+const auth=admin.auth();
 
 
-module.exports={db}
+module.exports={
+db,
+auth
+}

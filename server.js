@@ -5,6 +5,7 @@ const uuid=require('uuid/v1');
 const port=8080;
 const listing=require('./controller/controller');
 const data=new listing();
+const userAuthentication=require('./controller/userAuthentication');
 
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({extended:false}));
@@ -15,6 +16,9 @@ app.get('/getAllListings', function(req, res) {
 
     
 })
+
+app.post('/register',userAuthentication.User.signup);
+app.post('/login',userAuthentication.User.login);
 // this endpoint registers a node and broadcast
 app.post('/addlisting', function(req, res) {
     var email,desc,phone,price;
@@ -51,4 +55,4 @@ app.post('/deleteListing', function(req, res) {
 
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`AirBnB app listening on port ${port}!`))
