@@ -1,9 +1,7 @@
 const config=require('../config/clientConfig')
 const  db= config.mydb
 const auth=config.auth
-const cloudinary=require('cloudinary');
-require ('../config/cloudinary');
-const upload=require('../config/multer');
+
 
 
 
@@ -72,6 +70,28 @@ const User = {
           });
 
     },
+    async resetpassword(req,res){
+        var email=req.body.email;
+        auth.sendPasswordResetEmail(email).then(function(){
+            return res.status(200).json("An email has been sent to you to reset your password")
+        }).catch(function(error){
+            res.status(404).json("An error occured on the server. "+error.message)
+        })
+    },
+    async updateProfile(req,res){
+        var userid=req.user.uid
+        var username=req.body.username
+        var contact=req.body.contact
+        let userRef = db.collection('users').doc(userid);
+    userRef.update({username: username,contact:contact }).
+    then(function(){
+        res.status(200).json("You have successfully update your profile ")
+
+    }).catch(function(err){
+        res.status(400).json("An error occured and couldnt update your profile")
+    })
+    }
+
    
       
 

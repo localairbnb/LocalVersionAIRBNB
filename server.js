@@ -29,7 +29,9 @@ app.get('/getAllListings', function(req, res) {
 
 
 app.post('/register',userAuthentication.User.signup);
+app.post('/resetpassword',userAuthentication.User.resetpassword);
 app.post('/login',userAuthentication.User.login);
+app.post('/updateProfile',helper.checkifuserisloggedin,userAuthentication.User.updateProfile);
 app.post('/setProfileImage',helper.checkifuserisloggedin,upload.single('image'), async(req,res)=>{
     const result= await cloudinary.v2.uploader.upload(req.file.path)
     var image=result.secure_url
